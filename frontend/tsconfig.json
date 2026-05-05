@@ -3,5 +3,15 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "gql.tada/ts-plugin",
+        "schema": "../schema.graphql",
+        "tadaOutputLocation": "./src/api/graphql-env.d.ts",
+        "tadaTurboLocation": "./src/api/graphql-cache.d.ts"
+      }
+    ]
+  }
 }

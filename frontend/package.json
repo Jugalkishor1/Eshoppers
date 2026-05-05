@@ -7,10 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "codegen": "npx gql-tada generate output && npx gql-tada generate turbo",
+    "check-gql": "npx gql-tada check"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.100.9",
+    "gql.tada": "^1.9.2",
     "graphql-request": "^7.4.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+graphql-cache.d.ts
+graphql-env.d.ts

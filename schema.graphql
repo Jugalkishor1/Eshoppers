@@ -1,0 +1,17 @@
+type Category {
+  id: ID!
+  name: String
+}
+
+type Product {
+  active: Boolean
+  category: Category!
+  description: String
+  id: ID!
+  name: String
+  price: Float
+}
+
+type Query {
+  products: [Product!]!
+}
