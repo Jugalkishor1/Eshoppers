@@ -12,11 +12,13 @@
     "check-gql": "npx gql-tada check"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-query": "^5.100.9",
     "gql.tada": "^1.9.2",
     "graphql-request": "^7.4.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
