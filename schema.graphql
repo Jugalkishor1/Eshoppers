@@ -13,5 +13,7 @@ type Product {
 }
 
 type Query {
+  categories: [Category!]!
+  product(id: ID!): Product!
   products: [Product!]!
 }

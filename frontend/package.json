@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "codegen": "npx gql-tada generate output && npx gql-tada generate turbo",
-    "check-gql": "npx gql-tada check"
+    "schema": "cd ../backend && bundle exec rake graphql:dump_schema",
+    "codegen": "yarn schema && npx gql-tada generate output && npx gql-tada generate turbo && npx gql-tada check"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
