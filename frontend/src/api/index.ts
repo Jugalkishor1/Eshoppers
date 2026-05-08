@@ -16,6 +16,7 @@ const GET_PRODUCTS = graphql(`
       id
       name
       price
+      description
       category {
         name
       }
