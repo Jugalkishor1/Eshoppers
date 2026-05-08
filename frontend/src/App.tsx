@@ -1,13 +1,12 @@
-import Navbar from "./components"
-import Products from "./pages/Products"
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './Routes';
 
 function App() {
   return (
-    <>
-      <Navbar/>
-      <Products />
-    </>
-  )
+    <BrowserRouter>
+      <Routes/>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
