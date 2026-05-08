@@ -10,7 +10,7 @@ export const client = new GraphQLClient(endpoint, {
   },
 });
 
-const GET_PRODUCTS = graphql(`
+const GetProducts = graphql(`
   query Products {
     products {
       id
@@ -28,8 +28,28 @@ export const useProducts = () => {
   return useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const response = await client.request(GET_PRODUCTS);
+      const response = await client.request(GetProducts);
       return response.products;
+    },
+    initialData: [],
+  });
+};
+
+const GetCategories = graphql(`
+  query Categories {
+    categories {
+      id
+      name
+    }
+  }
+`);
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const response = await client.request(GetCategories);
+      return response.categories;
     },
     initialData: [],
   });
