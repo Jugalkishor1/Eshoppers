@@ -6,6 +6,7 @@ const DEFAULT_IMAGE =
 const Cart = () => {
   const cartItem = useCartStore((state) => state.items);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const getSubTotal = useCartStore((state) => state.getSubTotal());
 
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
@@ -71,7 +72,7 @@ const Cart = () => {
             <div className="mt-6 space-y-3 text-gray-600">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>$300</span>
+                <span>{getSubTotal}</span>
               </div>
 
               <div className="flex justify-between">
@@ -82,7 +83,7 @@ const Cart = () => {
 
             <div className="border-t mt-5 pt-5 flex justify-between font-bold text-lg">
               <span>Total</span>
-              <span>$300</span>
+              <span>{getSubTotal}</span>
             </div>
 
             <button className="w-full mt-6 bg-black text-white py-3 rounded-full">

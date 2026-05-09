@@ -21,6 +21,7 @@ type CartStore = {
 
   clearCart: () => void
   getTotalItems: () => number
+  getSubTotal: () => number
 }
 
 const useCartStore = create<CartStore>()(
@@ -93,6 +94,10 @@ const useCartStore = create<CartStore>()(
           0
         )
       },
+
+      getSubTotal: () => {
+        return get().items.map(item => item.price).reduce((prev, next) => prev + next);
+      }
     }),
     {
       name: 'cart-storage',
