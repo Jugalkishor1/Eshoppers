@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import useCartStore from "../../store/cartStore";
 
 type Product = {
-  id: string | number;
+  id: string;
   name: string;
   price: number;
+  description: string | null;
 };
 
 interface Props {
@@ -64,7 +65,7 @@ const ProductCard = ({ product }: Props) => {
 
           {
             isInCart ? (
-              <Link to="/"
+              <Link to="/cart"
                 className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition duration-200 shadow-md"
               >
                 Go to Cart

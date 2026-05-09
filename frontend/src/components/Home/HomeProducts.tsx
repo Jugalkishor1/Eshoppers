@@ -40,7 +40,7 @@ const Products = () => {
               .map((_, i) => (
                 <div
                   key={i}
-                  className="h-105 bg-gray-100 rounded-4x] animate-pulse"
+                  className="h-105 bg-gray-100 rounded-4xl animate-pulse"
                 />
               ))}
 

@@ -2,8 +2,10 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 type Product = {
-  id: string | number
+  id: string
   name: string
+  price: number
+  description: string | null;
 }
 
 type CartItem = Product & {
