@@ -1,28 +1,32 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type Product = {
-  id: string
-  name: string
-  price: number
+  id: string;
+  name: string;
+  price: number;
   description: string | null;
-}
+};
 
 type CartItem = Product & {
-  quantity: number
-}
+  quantity: number;
+};
 
 type CartStore = {
-  items: CartItem[]
+  items: CartItem[];
 
-  addToCart: (product: Product) => void
-  removeFromCart: (id: string) => void
-  updateQuantity: (id: string, quantity: number) => void
+  addToCart: (product: Product) => void;
 
-  clearCart: () => void
-  getTotalItems: () => number
-  getSubTotal: () => number
-}
+  increaseQuantity: (id: string) => void;
+  decreaseQuantity: (id: string) => void;
+
+  removeFromCart: (id: string) => void;
+
+  clearCart: () => void;
+
+  getTotalItems: () => number;
+  getSubTotal: () => number;
+};
 
 const useCartStore = create<CartStore>()(
   persist(
@@ -30,11 +34,11 @@ const useCartStore = create<CartStore>()(
       items: [],
 
       addToCart: (product) => {
-        const items = get().items
+        const items = get().items;
 
         const existingItem = items.find(
           (item) => item.id === product.id
-        )
+        );
 
         if (existingItem) {
           set({
@@ -46,7 +50,7 @@ const useCartStore = create<CartStore>()(
                   }
                 : item
             ),
-          })
+          });
         } else {
           set({
             items: [
@@ -56,22 +60,38 @@ const useCartStore = create<CartStore>()(
                 quantity: 1,
               },
             ],
-          })
+          });
         }
       },
 
-      removeFromCart: (id) => {
+      increaseQuantity: (id) => {
         set((state) => ({
-          items: state.items.filter((item) => item.id !== id),
-        }))
+          items: state.items.map((item) =>
+            item.id === id
+              ? {
+                  ...item,
+                  quantity: item.quantity + 1,
+                }
+              : item
+          ),
+        }));
       },
 
-      updateQuantity: (id, quantity) => {
-        if (quantity <= 0) {
+      decreaseQuantity: (id) => {
+        const item = get().items.find(
+          (item) => item.id === id
+        );
+
+        if (!item) return;
+
+        if (item.quantity <= 1) {
           set((state) => ({
-            items: state.items.filter((item) => item.id !== id),
-          }))
-          return
+            items: state.items.filter(
+              (item) => item.id !== id
+            ),
+          }));
+
+          return;
         }
 
         set((state) => ({
@@ -79,11 +99,19 @@ const useCartStore = create<CartStore>()(
             item.id === id
               ? {
                   ...item,
-                  quantity,
+                  quantity: item.quantity - 1,
                 }
               : item
           ),
-        }))
+        }));
+      },
+
+      removeFromCart: (id) => {
+        set((state) => ({
+          items: state.items.filter(
+            (item) => item.id !== id
+          ),
+        }));
       },
 
       clearCart: () => set({ items: [] }),
@@ -92,17 +120,21 @@ const useCartStore = create<CartStore>()(
         return get().items.reduce(
           (total, item) => total + item.quantity,
           0
-        )
+        );
       },
 
       getSubTotal: () => {
-        return get().items.map(item => item.price).reduce((prev, next) => prev + next);
-      }
+        return get().items.reduce(
+          (total, item) =>
+            total + item.price * item.quantity,
+          0
+        );
+      },
     }),
     {
-      name: 'cart-storage',
+      name: "cart-storage",
     }
   )
-)
+);
 
-export default useCartStore
+export default useCartStore;

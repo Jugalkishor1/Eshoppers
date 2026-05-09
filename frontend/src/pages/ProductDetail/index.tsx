@@ -1,27 +1,58 @@
-import { Heart, Minus, Plus, ShoppingCart } from 'lucide-react';
-import { useProduct } from '../../api';
-import { useParams } from 'react-router-dom';
+import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useProduct } from "../../api";
+import useCartStore from "../../store/cartStore";
 
-const DEFAULT_IMAGE1 =
+const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop";
 
-const DEFAULT_IMAGES = ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=1200&auto=format&fit=crop']
+const DEFAULT_IMAGES = [
+  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=1200&auto=format&fit=crop",
+];
 
 const ProductDetails = () => {
   const { productId } = useParams();
 
-  const { data: product, isLoading } = useProduct(productId!);
-  console.log(product);
-  
+  const {
+    addToCart,
+    increaseQuantity,
+    decreaseQuantity,
+    items,
+  } = useCartStore();
+
+  const { data: product, isLoading } = useProduct(
+    productId || ""
+  );
+
+  if (!productId) {
+    return (
+      <div className="p-10 text-center text-red-500">
+        Invalid Product
+      </div>
+    );
+  }
+
   if (isLoading) {
-    return <div className="p-10">Loading...</div>;
+    return <div className="container mx-auto px-4 py-14">Loading...</div>;
   }
 
   if (!product) {
-    return <div>Product not found</div>;
+    return (
+      <div className="p-10 text-center">
+        Product not found
+      </div>
+    );
   }
+
+  const cartItem = items.find(
+    (item) => item.id === product.id
+  );
+
+  const isInCart = !!cartItem;
+
+  const itemQuantity = cartItem?.quantity || 0;
 
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
@@ -31,8 +62,8 @@ const ProductDetails = () => {
           <div>
             <div className="bg-white rounded-[30px] overflow-hidden">
               <img
-                src={DEFAULT_IMAGE1}
-                alt="product"
+                src={DEFAULT_IMAGE}
+                alt={product.name}
                 className="w-full h-125 object-cover"
               />
             </div>
@@ -42,10 +73,11 @@ const ProductDetails = () => {
                 <img
                   key={i}
                   src={img}
-                  className={`w-24 h-24 object-cover rounded-2xl cursor-pointer border-2 ${
-                    DEFAULT_IMAGE1 === img
-                      ? 'border-black'
-                      : 'border-transparent'
+                  alt={`thumbnail-${i}`}
+                  className={`w-24 h-24 object-cover rounded-2xl border-2 ${
+                    DEFAULT_IMAGE === img
+                      ? "border-black"
+                      : "border-transparent"
                   }`}
                 />
               ))}
@@ -54,11 +86,11 @@ const ProductDetails = () => {
 
           <div>
             <h1 className="text-4xl font-bold text-gray-900">
-              {product.name} 
+              {product.name}
             </h1>
 
             <div className="mt-6 text-3xl font-bold text-gray-900">
-              {product.price}
+              ₹{product.price}
             </div>
 
             <p className="mt-6 text-gray-500 leading-relaxed">
@@ -67,25 +99,50 @@ const ProductDetails = () => {
 
             <div className="flex items-center gap-4 mt-8">
               <button
-                className="w-10 h-10 rounded-full bg-white border flex items-center justify-center"
+                disabled={!isInCart}
+                onClick={() => decreaseQuantity(product.id)}
+                className={`w-10 h-10 rounded-full border flex items-center justify-center transition ${
+                  !isInCart
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-white hover:bg-gray-100"
+                }`}
               >
                 <Minus size={16} />
               </button>
 
-              <span className="text-lg font-medium">{1}</span>
+              <span className="text-lg font-medium min-w-5 text-center">
+                {itemQuantity}
+              </span>
 
               <button
-                className="w-10 h-10 rounded-full bg-white border flex items-center justify-center"
+                disabled={!isInCart}
+                onClick={() => increaseQuantity(product.id)}
+                className={`w-10 h-10 rounded-full border flex items-center justify-center transition ${
+                  !isInCart
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-white hover:bg-gray-100"
+                }`}
               >
                 <Plus size={16} />
               </button>
             </div>
 
             <div className="flex gap-4 mt-10">
-              <button className="flex items-center justify-center gap-2 bg-black text-white px-6 py-4 rounded-2xl font-medium hover:bg-gray-800 transition w-full">
-                <ShoppingCart size={18} />
-                Add to Cart
-              </button>
+              {isInCart ? (
+                <button
+                  className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-4 rounded-2xl font-medium w-full"
+                >
+                  ✓ Added to Cart
+                </button>
+              ) : (
+                <button
+                  onClick={() => addToCart(product)}
+                  className="flex items-center justify-center gap-2 bg-black text-white px-6 py-4 rounded-2xl font-medium hover:bg-gray-800 transition w-full"
+                >
+                  <ShoppingCart size={18} />
+                  Add to Cart
+                </button>
+              )}
 
               <button className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white border hover:border-black transition">
                 <Heart size={18} />
@@ -112,7 +169,7 @@ const ProductDetails = () => {
                 className="bg-white rounded-[25px] overflow-hidden"
               >
                 <img
-                  src={DEFAULT_IMAGE1}
+                  src={DEFAULT_IMAGE}
                   className="h-55 w-full object-cover"
                 />
 
