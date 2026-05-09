@@ -35,6 +35,32 @@ export const useProducts = () => {
   });
 };
 
+const GetProduct = graphql(`
+  query Product($productId: ID!) {
+    product(id: $productId) {
+      id
+      name
+      price
+      description
+    }
+  }
+`);
+
+export const useProduct = (productId: string) => {
+  return useQuery({
+    queryKey: ['product', productId],
+    queryFn: async () => {
+      const response = await client.request({
+        document: GetProduct,
+        variables: {
+          productId,
+        },
+      });
+      return response.product;
+    },
+  });
+};
+
 const GetCategories = graphql(`
   query Categories {
     categories {

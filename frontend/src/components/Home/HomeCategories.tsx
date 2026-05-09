@@ -45,7 +45,7 @@ const HomeCategories = () => {
               ))}
 
           {!isLoading &&
-            data.slice(0, 4).map((category: any) => (
+            data.slice(0, 4).map((category) => (
               <CategoryCard
                 key={category.id}
                 category={category}
