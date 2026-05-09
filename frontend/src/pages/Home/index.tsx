@@ -1,7 +1,7 @@
 import Hero from "../../components/Home/Hero"
 import Features from "../../components/Home/Features";
-import Categories from "../../components/Home/Categories";
-import Products from "../../components/Home/Products";
+import Categories from "../../components/Home/HomeCategories";
+import Products from "../../components/Home/HomeProducts";
 import CTA from "../../components/Home/CTA";
 import Newsletter from "../../components/Home/Newsletter";
 
