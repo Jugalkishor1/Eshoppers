@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Menu, X, Search, ShoppingCart, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import useCartStore from '../../store/cartStore';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const totalCartItems = useCartStore((state) => state.getTotalItems())
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -50,7 +52,7 @@ const Header = () => {
               <ShoppingCart size={20} className="text-gray-800" />
 
               <span className="absolute -top-2 -right-2 w-4 h-4 bg-black text-white text-[10px] flex items-center justify-center rounded-full">
-                0
+                {totalCartItems}
               </span>
             </Link>
 
@@ -102,7 +104,7 @@ const Header = () => {
             <Link to="/products" className="block text-gray-700">
               Products
             </Link>
-g
+
             <Link to="/categories" className="block text-gray-700">
               Categories
             </Link>

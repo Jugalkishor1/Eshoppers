@@ -1,5 +1,6 @@
 import { Heart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import useCartStore from "../../store/cartStore";
 
 type Product = {
   id: string | number;
@@ -16,6 +17,12 @@ const DEFAULT_IMAGE =
   "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop";
 
 const ProductCard = ({ product }: Props) => {
+  const addToCart = useCartStore((state) => state.addToCart)
+
+  const isInCart = useCartStore((state) => 
+    state.items.some((item) => item.id === product.id)
+  );
+
   return (
     <div className="bg-white rounded-[28px] overflow-hidden group border border-gray-100 hover:shadow-sm transition">
 
@@ -55,9 +62,22 @@ const ProductCard = ({ product }: Props) => {
             ₹{Number(product.price).toFixed(0)}
           </span>
 
-          <button className="bg-black text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition">
-            Add
-          </button>
+          {
+            isInCart ? (
+              <Link to="/"
+                className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition duration-200 shadow-md"
+              >
+                Go to Cart
+              </Link>
+            ) : (
+              <button
+                onClick={() => addToCart(product)}
+                className="bg-black text-white px-4 py-2 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Add to cart
+              </button>
+            )
+          }
         </div>
 
       </div>
