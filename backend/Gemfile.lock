@@ -435,6 +435,7 @@ DEPENDENCIES
   bundler-audit
   debug
   devise
+  dotenv
   graphql (~> 2.6)
   image_processing (~> 1.2)
   kamal
