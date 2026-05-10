@@ -1,7 +1,7 @@
 # app/admin/categories.rb
 
 ActiveAdmin.register Category do
-  permit_params :name, :active
+  permit_params :name, :active, :image
 
   index do
     selectable_column
@@ -21,6 +21,9 @@ ActiveAdmin.register Category do
   form do |f|
     f.inputs do
       f.input :name
+      f.input :image,
+              as: :file,
+              input_html: { multiple: false }
       f.input :active
     end
 
@@ -32,6 +35,11 @@ ActiveAdmin.register Category do
       row :id
       row :name
       row :active
+      row :images do |product|
+        if product.image.attached?
+          image_tag url_for(product.image.variant(resize_to_limit: [100, 100]))
+        end
+      end
       row :created_at
       row :updated_at
     end

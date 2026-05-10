@@ -5,7 +5,8 @@ ActiveAdmin.register Product do
                 :description,
                 :price,
                 :active,
-                :category_id
+                :category_id,
+                images: []
 
   index do
     selectable_column
@@ -29,13 +30,12 @@ ActiveAdmin.register Product do
   form do |f|
     f.inputs do
       f.input :category
-
       f.input :name
-
       f.input :description
-
       f.input :price
-
+      f.input :images,
+              as: :file,
+              input_html: { multiple: true }
       f.input :active
     end
 
@@ -49,6 +49,21 @@ ActiveAdmin.register Product do
       row :name
       row :description
       row :price
+
+      row :images do |product|
+        if product.images.attached?
+          ul do
+            product.images.each do |img|
+              li do
+                image_tag url_for(
+                  img.variant(resize_to_limit: [100, 100])
+                )
+              end
+            end
+          end
+        end
+      end
+
       row :active
       row :created_at
       row :updated_at
