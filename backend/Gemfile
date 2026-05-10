@@ -52,3 +52,9 @@ end
 gem "graphql", "~> 2.6"
 
 gem 'rack-cors'
+
+# Required for ActiveAdmin
+gem 'sass-rails'
+
+gem 'activeadmin'
+gem 'devise'
