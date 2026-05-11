@@ -66,6 +66,7 @@ const GetCategories = graphql(`
     categories {
       id
       name
+      image
     }
   }
 `);

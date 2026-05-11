@@ -1,5 +1,6 @@
 type Category {
   id: ID!
+  image: String
   name: String!
 }
 
