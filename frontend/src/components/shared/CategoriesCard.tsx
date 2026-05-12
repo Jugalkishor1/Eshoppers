@@ -10,7 +10,6 @@ interface Props {
   category: Category;
 }
 
-
 const CategoryCard = ({ category }: Props) => {
   return (
     <div className="group relative overflow-hidden rounded-4xl cursor-pointer">

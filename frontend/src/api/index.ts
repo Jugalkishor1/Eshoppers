@@ -16,6 +16,7 @@ const GetProducts = graphql(`
       id
       name
       price
+      images
       description
       category {
         name
@@ -42,6 +43,7 @@ const GetProduct = graphql(`
       name
       price
       description
+      images
     }
   }
 `);

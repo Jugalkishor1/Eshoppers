@@ -9,6 +9,7 @@ type Product {
   category: Category!
   description: String
   id: ID!
+  images: [String!]
   name: String!
   price: Float!
 }
