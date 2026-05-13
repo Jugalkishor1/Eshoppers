@@ -14,13 +14,10 @@ module Types
       Category.all
     end
 
-    def products(category_id:)
-      if category_id.present?  
-        category = Category.find(category_id)
-        category.products
-      else
-        Product.all
-      end
+    def products(category_id: nil)
+      scope = Product.all
+      scope = scope.where(category_id:) if category_id.present?
+      scope
     end
 
     def product(id:)
