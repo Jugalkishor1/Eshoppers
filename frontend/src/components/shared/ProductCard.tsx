@@ -8,7 +8,10 @@ type Product = {
   name: string;
   price: number;
   description: string | null;
-  images?: string | null;
+  images?: string[] | null;
+  category: {
+    name: string;
+  };
 };
 
 interface Props {

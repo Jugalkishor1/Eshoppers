@@ -12,7 +12,6 @@ module Types
     field :images, [String], null: true
     field :category, Types::CategoryType, null: false
 
-
     def images
       object.images.map do |image|
         rails_blob_url(image, host: context[:request].base_url)

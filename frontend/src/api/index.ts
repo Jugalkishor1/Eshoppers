@@ -11,8 +11,8 @@ export const client = new GraphQLClient(endpoint, {
 });
 
 const GetProducts = graphql(`
-  query Products {
-    products {
+  query ($categoryId: ID) {
+    products(categoryId: $categoryId) {
       id
       name
       price
@@ -25,13 +25,21 @@ const GetProducts = graphql(`
   }
 `);
 
-export const useProducts = () => {
+export const useProducts = (categoryId?: string) => {
   return useQuery({
-    queryKey: ['products'],
+    enabled: categoryId !== undefined || categoryId === undefined,
+    queryKey: ["products", categoryId],
     queryFn: async () => {
-      const response = await client.request(GetProducts);
+      const response = await client.request({
+        document: GetProducts,
+        variables: {
+          categoryId,
+        },
+      });
+
       return response.products;
     },
+
     initialData: [],
   });
 };

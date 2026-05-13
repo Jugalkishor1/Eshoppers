@@ -4,7 +4,7 @@ import { useProducts } from "../../api";
 import ProductCard from "../shared/ProductCard";
 
 const Products = () => {
-  const { data, isLoading } = useProducts();
+  const { data, isLoading } = useProducts("");
 
   return (
     <section className="bg-white py-24">

@@ -2,7 +2,7 @@ import { useProducts } from "../../api";
 import ProductCard from "../../components/shared/ProductCard";
 
 const ProductsPage = () => {
-  const { data, isLoading } = useProducts();
+  const { data, isLoading } = useProducts("");
 
   if (isLoading) {
     return <div className="p-10">Loading...</div>;
