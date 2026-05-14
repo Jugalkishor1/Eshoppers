@@ -1,16 +1,9 @@
+import defaultProductImg from "../../assets/images/default_product_img.png"
 import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../../api";
 import useCartStore from "../../store/cartStore";
-
-const DEFAULT_IMAGE =
-  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop";
-
-const DEFAULT_IMAGES = [
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1580894908361-967195033215?q=80&w=1200&auto=format&fit=crop",
-];
+import { useState } from "react";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -25,6 +18,8 @@ const ProductDetails = () => {
   const { data: product, isLoading } = useProduct(
     productId || ""
   );
+  
+  const [selectedImage, setSelectedImage] = useState("")
 
   if (!productId) {
     return (
@@ -54,6 +49,8 @@ const ProductDetails = () => {
 
   const itemQuantity = cartItem?.quantity || 0;
 
+  const activeImage = selectedImage || product.images?.[0] || defaultProductImg
+
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
       <div className="container mx-auto px-4 py-14">
@@ -62,24 +59,29 @@ const ProductDetails = () => {
           <div>
             <div className="bg-white rounded-[30px] overflow-hidden">
               <img
-                src={DEFAULT_IMAGE}
+                src={activeImage}
                 alt={product.name}
                 className="w-full h-125 object-cover"
               />
             </div>
 
-            <div className="flex gap-4 mt-5">
-              {DEFAULT_IMAGES.map((img, i) => (
-                <img
+            <div className="flex gap-4 mt-5 overflow-x-auto pb-1">
+              {product.images?.map((img, i) => (
+                <div
+                  onClick={() => setSelectedImage(img)}
                   key={i}
-                  src={img}
-                  alt={`thumbnail-${i}`}
-                  className={`w-24 h-24 object-cover rounded-2xl border-2 ${
-                    DEFAULT_IMAGE === img
+                  className={`w-24 h-24 rounded-2xl overflow-hidden border-2 bg-white shrink-0 ${
+                    activeImage === img
                       ? "border-black"
-                      : "border-transparent"
+                      : "border-gray-200"
                   }`}
-                />
+                >
+                  <img
+                    src={img}
+                    alt={`thumbnail-${i}`}
+                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -157,28 +159,45 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        <div className="mt-20">
-          <h2 className="text-2xl font-bold text-gray-900">
-            You may also like
-          </h2>
+        <div className="mt-24">
+          <div className="flex items-center justify-between">
+            <h2 className="text-3xl font-bold text-gray-900">
+              You may also like
+            </h2>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <button className="text-sm font-medium text-black hover:underline">
+              View all
+            </button>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-7 mt-10">
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
-                className="bg-white rounded-[25px] overflow-hidden"
+                className="group bg-white rounded-3xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
               >
-                <img
-                  src={DEFAULT_IMAGE}
-                  className="h-55 w-full object-cover"
-                />
+                <div className="overflow-hidden bg-gray-100">
+                  <img
+                    src={defaultProductImg}
+                    className="h-64 w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    alt="product"
+                  />
+                </div>
 
-                <div className="p-4">
-                  <h3 className="font-medium text-gray-900">
+                <div className="p-5">
+                  <h3 className="font-semibold text-lg text-gray-900">
                     Similar Product
                   </h3>
 
-                  <p className="text-gray-500 mt-1">$99</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <p className="text-xl font-bold text-black">
+                      $99
+                    </p>
+
+                    <button className="px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 transition">
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

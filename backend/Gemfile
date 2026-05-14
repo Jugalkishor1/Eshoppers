@@ -47,8 +47,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "dotenv"
 end
 
 gem "graphql", "~> 2.6"
 
 gem 'rack-cors'
+
+# Required for ActiveAdmin
+gem 'sass-rails'
+
+gem 'activeadmin'
+gem 'devise'
+gem 'arctic_admin'

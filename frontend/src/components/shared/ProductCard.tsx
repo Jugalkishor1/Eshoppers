@@ -1,21 +1,22 @@
 import { Heart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import useCartStore from "../../store/cartStore";
+import defaultProductImg from "../../assets/images/default_product_img.png"
 
 type Product = {
   id: string;
   name: string;
   price: number;
   description: string | null;
+  images?: string[] | null;
+  category: {
+    name: string;
+  };
 };
 
 interface Props {
   product: Product;
 }
-
-// temporary fallback image
-const DEFAULT_IMAGE =
-  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop";
 
 const ProductCard = ({ product }: Props) => {
   const addToCart = useCartStore((state) => state.addToCart)
@@ -31,7 +32,7 @@ const ProductCard = ({ product }: Props) => {
         <div className="relative h-64 bg-gray-100 overflow-hidden">
 
           <img
-            src={DEFAULT_IMAGE}
+            src={product.images?.[0] ?? defaultProductImg}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
           />

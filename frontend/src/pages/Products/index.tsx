@@ -1,8 +1,10 @@
+import { useParams } from "react-router-dom";
 import { useProducts } from "../../api";
 import ProductCard from "../../components/shared/ProductCard";
 
 const ProductsPage = () => {
-  const { data, isLoading } = useProducts();
+  const { categoryId } = useParams();
+  const { data, isLoading } = useProducts(categoryId || "");
 
   if (isLoading) {
     return <div className="p-10">Loading...</div>;

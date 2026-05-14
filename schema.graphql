@@ -1,5 +1,6 @@
 type Category {
   id: ID!
+  image: String
   name: String!
 }
 
@@ -8,6 +9,7 @@ type Product {
   category: Category!
   description: String
   id: ID!
+  images: [String!]
   name: String!
   price: Float!
 }
@@ -15,5 +17,5 @@ type Product {
 type Query {
   categories: [Category!]!
   product(id: ID!): Product!
-  products: [Product!]!
+  products(categoryId: ID): [Product!]!
 }
