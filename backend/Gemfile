@@ -60,3 +60,6 @@ gem 'sass-rails'
 gem 'activeadmin'
 gem 'devise'
 gem 'arctic_admin'
+
+gem 'jwt'
+gem 'bcrypt'
