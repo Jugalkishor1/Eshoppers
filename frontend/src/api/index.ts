@@ -1,14 +1,23 @@
 import { GraphQLClient } from 'graphql-request';
 import { useQuery } from '@tanstack/react-query';
 import { graphql } from 'gql.tada';
+import { useAuthStore } from '../store/authStore';
 
 const endpoint = import.meta.env.VITE_BACKEND_URL + '/graphql';
 
-export const client = new GraphQLClient(endpoint, {
-  headers: {
-    Authorization: 'Bearer YOUR_TOKEN',
-  },
-});
+export const getClient = () => {
+  const token = useAuthStore.getState().token;
+
+  return new GraphQLClient(endpoint, {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+};
+
+export const logout = () => {
+  useAuthStore.getState().logout();
+};
 
 const GetProducts = graphql(`
   query ($categoryId: ID) {

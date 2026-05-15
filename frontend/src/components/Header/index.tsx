@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Menu, X, Search, ShoppingCart, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useCartStore from '../../store/cartStore';
+import { useAuthStore } from '../../store/authStore';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const totalCartItems = useCartStore((state) => state.getTotalItems())
+  const totalCartItems = useCartStore((state) => state.getTotalItems());
+  const authToken = useAuthStore((state) => state.token);
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -36,14 +38,23 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-
-            <Link
-              to="/login"
-              className="hidden sm:flex items-center gap-2 text-sm text-gray-700 hover:text-black transition"
-            >
-              <User size={18} />
-              Login
-            </Link>
+            {authToken ? (
+              <Link
+                to="/profile"
+                className="hidden sm:flex items-center gap-2 text-sm text-gray-700 hover:text-black transition"
+              >
+                <User size={18} />
+                Profile
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="hidden sm:flex items-center gap-2 text-sm text-gray-700 hover:text-black transition"
+              >
+                <User size={18} />
+                Login
+              </Link>
+            )}
 
             <Link
               to="/cart"
