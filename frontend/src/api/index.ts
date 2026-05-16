@@ -15,6 +15,7 @@ export const getClient = () => {
   });
 };
 
+
 export const logout = () => {
   useAuthStore.getState().logout();
 };
@@ -39,7 +40,7 @@ export const useProducts = (categoryId?: string) => {
     enabled: categoryId !== undefined || categoryId === undefined,
     queryKey: ["products", categoryId],
     queryFn: async () => {
-      const response = await client.request({
+      const response = await getClient().request({
         document: GetProducts,
         variables: {
           categoryId,
@@ -69,7 +70,7 @@ export const useProduct = (productId: string) => {
   return useQuery({
     queryKey: ['product', productId],
     queryFn: async () => {
-      const response = await client.request({
+      const response = await getClient().request({
         document: GetProduct,
         variables: {
           productId,
@@ -94,7 +95,7 @@ export const useCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const response = await client.request(GetCategories);
+      const response = await getClient().request(GetCategories);
       return response.categories;
     },
     initialData: [],
