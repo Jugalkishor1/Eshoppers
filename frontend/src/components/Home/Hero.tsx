@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { formatPrice } from "../../helpers/currency";
 
 const Hero = () => {
   return (
@@ -51,7 +52,7 @@ const Hero = () => {
                 <p className="text-sm text-gray-500">Starting From</p>
 
                 <h3 className="text-3xl font-bold text-gray-900 mt-1">
-                  $149
+                  {formatPrice(149)}
                 </h3> 
               </div>
             </div>

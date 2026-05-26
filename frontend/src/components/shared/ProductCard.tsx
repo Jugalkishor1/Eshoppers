@@ -2,6 +2,7 @@ import { Heart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import useCartStore from "../../store/cartStore";
 import defaultProductImg from "../../assets/images/default_product_img.png"
+import { formatPrice } from "../../helpers/currency";
 
 type Product = {
   id: string;
@@ -61,7 +62,7 @@ const ProductCard = ({ product }: Props) => {
 
         <div className="flex items-center justify-between mt-5">
           <span className="text-lg font-bold text-gray-900">
-            ₹{Number(product.price).toFixed(0)}
+            {formatPrice(product.price)}
           </span>
 
           {

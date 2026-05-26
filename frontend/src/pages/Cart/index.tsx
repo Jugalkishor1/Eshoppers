@@ -2,6 +2,7 @@ import useCartStore from "../../store/cartStore";
 import defaultProductImage from "../../assets/images/default_product_img.png";
 import { Link } from "react-router-dom";
 import { Minus, Plus } from "lucide-react";
+import { formatPrice } from "../../helpers/currency";
 
 const Cart = () => {
   const cartItem = useCartStore((state) => state.items);
@@ -100,7 +101,7 @@ const Cart = () => {
                       </div>
 
                       <span className="font-bold">
-                        ${item.price}
+                        {formatPrice(item.price)}
                       </span>
                     </div>
                   </div>
@@ -114,7 +115,7 @@ const Cart = () => {
               <div className="mt-6 space-y-3 text-gray-600">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${getSubTotal()}</span>
+                  <span>{formatPrice(getSubTotal())}</span>
                 </div>
 
                 <div className="flex justify-between">
@@ -125,7 +126,7 @@ const Cart = () => {
 
               <div className="border-t mt-5 pt-5 flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>${getSubTotal()}</span>
+                <span>{formatPrice(getSubTotal())}</span>
               </div>
 
               <button className="w-full mt-6 bg-black text-white py-3 rounded-full">
