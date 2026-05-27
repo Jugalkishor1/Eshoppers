@@ -3,6 +3,7 @@ import defaultProductImage from "../../assets/images/default_product_img.png";
 import { Link } from "react-router-dom";
 import { Minus, Plus } from "lucide-react";
 import { formatPrice } from "../../helpers/currency";
+import { Button } from "@/components/ui/button";
 
 const Cart = () => {
   const cartItem = useCartStore((state) => state.items);
@@ -70,13 +71,13 @@ const Cart = () => {
                           {item.description}
                         </p>
                       </div>
-
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-red-500 hover:text-red-700 text-sm font-medium"
-                      >
-                        Remove
-                      </button>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Remove
+                    </Button>
                     </div>
 
                     <div className="flex items-center justify-between mt-4">
@@ -129,9 +130,9 @@ const Cart = () => {
                 <span>{formatPrice(getSubTotal())}</span>
               </div>
 
-              <button className="w-full mt-6 bg-black text-white py-3 rounded-full">
+              <Button size="lg" className="w-full mt-6 rounded-full">
                 Checkout
-              </button>
+              </Button>
             </div>
           </div>
         )}
