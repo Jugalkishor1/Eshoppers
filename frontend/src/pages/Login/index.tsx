@@ -1,6 +1,41 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import type { SubmitHandler } from "react-hook-form"
+import { useLoginUser } from "../../api"
+import { notify } from "@/lib/notifications"
+
+type Inputs = {
+  email: string
+  password: string
+}
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
+
+  const loginUser = useLoginUser();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      await loginUser.mutateAsync({
+        input: {
+          email: data.email,
+          password: data.password,
+        },
+      });
+
+      notify.success('Logged in successfully');
+      void navigate('/', { replace: true });
+    } catch (error) {
+      notify.error(error);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md bg-white rounded-[30px] p-8 shadow-sm">
@@ -10,11 +45,14 @@ const Login = () => {
           </h1>
 
           <p className="mt-3 text-gray-500">
-            Login to continue shopping with E Shoppers
+            Login to continue your shopping journey
           </p>
         </div>
 
-        <form className="mt-10 space-y-5">
+        <form
+          onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+          className="mt-10 space-y-5"
+        >
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
@@ -23,40 +61,49 @@ const Login = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              {...register("email", { required: "Email is required", })}
               className="w-full h-14 px-5 rounded-2xl border border-gray-200 outline-none focus:border-black"
             />
+
+            {errors.email && (
+              <span className="mt-2 block text-sm text-red-500">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-gray-700">
-                Password
-              </label>
-
-              <button
-                type="button"
-                className="text-sm text-gray-500 hover:text-black"
-              >
-                Forgot Password?
-              </button>
-            </div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
 
             <input
               type="password"
               placeholder="Enter your password"
+              {...register("password", { required: "Password is required" })}
               className="w-full h-14 px-5 rounded-2xl border border-gray-200 outline-none focus:border-black"
             />
+
+            {errors.password && (
+              <span className="mt-2 block text-sm text-red-500">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
-          <button className="w-full h-14 rounded-2xl bg-black text-white font-semibold hover:opacity-90 transition">
-            Login
+          <button
+            type="submit"
+            disabled={loginUser.isPending}
+            className="w-full h-14 rounded-2xl bg-black text-white font-semibold hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loginUser.isPending ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="text-center text-gray-500 mt-8">
-          Don’t have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link to="/signup" className="text-black font-semibold">
-            Sign Up
+            Create Account
           </Link>
         </p>
       </div>

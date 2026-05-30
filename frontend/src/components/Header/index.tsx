@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import { Menu, X, Search, ShoppingCart, User } from 'lucide-react';
+import { LogOut, Menu, X, Search, ShoppingCart, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useCartStore from '../../store/cartStore';
 import { useAuthStore } from '../../store/authStore';
+import { notify } from '@/lib/notifications';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const totalCartItems = useCartStore((state) => state.getTotalItems());
   const authToken = useAuthStore((state) => state.token);
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    notify.success('Logged out successfully');
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -39,13 +46,14 @@ const Header = () => {
 
           <div className="flex items-center gap-4">
             {authToken ? (
-              <Link
-                to="/profile"
+              <button
+                type="button"
+                onClick={handleLogout}
                 className="hidden sm:flex items-center gap-2 text-sm text-gray-700 hover:text-black transition"
               >
-                <User size={18} />
-                Profile
-              </Link>
+                <LogOut size={18} />
+                Logout
+              </button>
             ) : (
               <Link
                 to="/login"
@@ -120,9 +128,19 @@ const Header = () => {
               Categories
             </Link>
 
-            <Link to="/login" className="block text-gray-700">
-              Login
-            </Link>
+            {authToken ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="block text-gray-700"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="block text-gray-700">
+                Login
+              </Link>
+            )}
           </div>
         )}
       </div>
