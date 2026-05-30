@@ -1,13 +1,9 @@
 export function getErrorMessage(error: unknown): string {
-  if (typeof error === 'string') {
+  if (typeof error === "string") {
     return error;
   }
 
-  if (
-    typeof error === 'object' &&
-    error !== null &&
-    'response' in error
-  ) {
+  if (typeof error === "object" && error !== null && "response" in error) {
     const graphQLError = (
       error as {
         response?: {
@@ -25,5 +21,5 @@ export function getErrorMessage(error: unknown): string {
     return error.message;
   }
 
-  return 'Something went wrong';
+  return "Something went wrong";
 }

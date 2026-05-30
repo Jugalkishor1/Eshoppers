@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import { toast, Toaster } from 'sonner';
-import { getErrorMessage } from './error-handler';
+import { toast, Toaster } from "sonner";
+import { getErrorMessage } from "./error-handler";
 
 export const Notifications = () => (
   <Toaster
@@ -9,9 +9,9 @@ export const Notifications = () => (
     richColors
     toastOptions={{
       classNames: {
-        toast: 'rounded-xl border shadow-lg',
-        title: 'font-semibold',
-        description: 'text-sm',
+        toast: "rounded-xl border shadow-lg",
+        title: "font-semibold",
+        description: "text-sm",
       },
     }}
   />

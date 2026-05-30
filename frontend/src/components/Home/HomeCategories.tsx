@@ -9,9 +9,7 @@ const HomeCategories = () => {
   return (
     <section className="bg-[#F8F8F8] py-24">
       <div className="container mx-auto px-4">
-
         <div className="flex items-end justify-between gap-6 flex-wrap">
-
           <div>
             <span className="text-sm tracking-[0.25em] uppercase text-gray-400">
               Categories
@@ -29,11 +27,9 @@ const HomeCategories = () => {
             View All
             <ArrowRight size={18} />
           </Link>
-
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
-
           {isLoading &&
             Array(4)
               .fill(0)
@@ -45,13 +41,11 @@ const HomeCategories = () => {
               ))}
 
           {!isLoading &&
-            data.slice(0, 4).map((category) => (
-              <CategoryCard
-                key={category.id}
-                category={category}
-              />
-            ))}
-
+            data
+              .slice(0, 4)
+              .map((category) => (
+                <CategoryCard key={category.id} category={category} />
+              ))}
         </div>
       </div>
     </section>

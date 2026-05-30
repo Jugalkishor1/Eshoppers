@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useForm } from "react-hook-form"
-import type { SubmitHandler } from "react-hook-form"
-import { useLoginUser } from "../../api"
-import { notify } from "@/lib/notifications"
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useLoginUser } from "../../api";
+import { notify } from "@/lib/notifications";
 
 type Inputs = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>();
 
   const loginUser = useLoginUser();
 
@@ -29,8 +29,8 @@ const Login = () => {
         },
       });
 
-      notify.success('Logged in successfully');
-      void navigate('/', { replace: true });
+      notify.success("Logged in successfully");
+      void navigate("/", { replace: true });
     } catch (error) {
       notify.error(error);
     }
@@ -40,9 +40,7 @@ const Login = () => {
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md bg-white rounded-[30px] p-8 shadow-sm">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900">
-            Welcome Back
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900">Welcome Back</h1>
 
           <p className="mt-3 text-gray-500">
             Login to continue your shopping journey
@@ -61,7 +59,7 @@ const Login = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              {...register("email", { required: "Email is required", })}
+              {...register("email", { required: "Email is required" })}
               className="w-full h-14 px-5 rounded-2xl border border-gray-200 outline-none focus:border-black"
             />
 
@@ -108,7 +106,7 @@ const Login = () => {
         </p>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -26,9 +26,7 @@ const CategoryCard = ({ category }: Props) => {
       <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
 
       <div className="absolute bottom-6 left-6">
-        <h3 className="text-2xl font-semibold text-white">
-          {category.name}
-        </h3>
+        <h3 className="text-2xl font-semibold text-white">{category.name}</h3>
 
         <span className="mt-4 inline-block rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition hover:bg-gray-200">
           Explore

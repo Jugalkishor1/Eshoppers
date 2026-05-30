@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { LogOut, Menu, X, Search, ShoppingCart, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import useCartStore from '../../store/cartStore';
-import { useAuthStore } from '../../store/authStore';
-import { notify } from '@/lib/notifications';
+import { useState } from "react";
+import { LogOut, Menu, X, Search, ShoppingCart, User } from "lucide-react";
+import { Link } from "react-router-dom";
+import useCartStore from "../../store/cartStore";
+import { useAuthStore } from "../../store/authStore";
+import { notify } from "@/lib/notifications";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,15 +13,13 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    notify.success('Logged out successfully');
+    notify.success("Logged out successfully");
   };
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
       <div className="container mx-auto px-4 py-4">
-        
         <div className="flex items-center justify-between">
-
           <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center">
               <span className="text-white font-bold">E</span>
@@ -79,11 +77,7 @@ const Header = () => {
               className="md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? (
-                <X size={22} />
-              ) : (
-                <Menu size={22} />
-              )}
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>

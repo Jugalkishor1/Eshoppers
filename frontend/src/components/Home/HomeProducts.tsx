@@ -9,9 +9,7 @@ const Products = () => {
   return (
     <section className="bg-white py-24">
       <div className="container mx-auto px-4">
-
         <div className="flex items-end justify-between gap-6 flex-wrap">
-
           <div>
             <span className="text-sm tracking-[0.25em] uppercase text-gray-400">
               Featured Products
@@ -29,11 +27,9 @@ const Products = () => {
             Browse All
             <ArrowRight size={18} />
           </Link>
-
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
-
           {isLoading &&
             Array(4)
               .fill(0)
@@ -45,10 +41,11 @@ const Products = () => {
               ))}
 
           {!isLoading &&
-            data.slice(0, 4).map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-
+            data
+              .slice(0, 4)
+              .map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </div>
       </div>
     </section>

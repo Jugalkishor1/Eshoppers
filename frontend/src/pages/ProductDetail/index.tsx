@@ -1,4 +1,4 @@
-import defaultProductImg from "../../assets/images/default_product_img.png"
+import defaultProductImg from "../../assets/images/default_product_img.png";
 import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../../api";
@@ -9,25 +9,15 @@ import { formatPrice } from "../../helpers/currency";
 const ProductDetails = () => {
   const { productId } = useParams();
 
-  const {
-    addToCart,
-    increaseQuantity,
-    decreaseQuantity,
-    items,
-  } = useCartStore();
+  const { addToCart, increaseQuantity, decreaseQuantity, items } =
+    useCartStore();
 
-  const { data: product, isLoading } = useProduct(
-    productId || ""
-  );
-  
-  const [selectedImage, setSelectedImage] = useState("")
+  const { data: product, isLoading } = useProduct(productId || "");
+
+  const [selectedImage, setSelectedImage] = useState("");
 
   if (!productId) {
-    return (
-      <div className="p-10 text-center text-red-500">
-        Invalid Product
-      </div>
-    );
+    return <div className="p-10 text-center text-red-500">Invalid Product</div>;
   }
 
   if (isLoading) {
@@ -35,28 +25,21 @@ const ProductDetails = () => {
   }
 
   if (!product) {
-    return (
-      <div className="p-10 text-center">
-        Product not found
-      </div>
-    );
+    return <div className="p-10 text-center">Product not found</div>;
   }
 
-  const cartItem = items.find(
-    (item) => item.id === product.id
-  );
+  const cartItem = items.find((item) => item.id === product.id);
 
   const isInCart = !!cartItem;
 
   const itemQuantity = cartItem?.quantity || 0;
 
-  const activeImage = selectedImage || product.images?.[0] || defaultProductImg
+  const activeImage = selectedImage || product.images?.[0] || defaultProductImg;
 
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
       <div className="container mx-auto px-4 py-14">
         <div className="grid lg:grid-cols-2 gap-12">
-
           <div>
             <div className="bg-white rounded-[30px] overflow-hidden">
               <img
@@ -72,9 +55,7 @@ const ProductDetails = () => {
                   onClick={() => setSelectedImage(img)}
                   key={i}
                   className={`w-24 h-24 rounded-2xl overflow-hidden border-2 bg-white shrink-0 ${
-                    activeImage === img
-                      ? "border-black"
-                      : "border-gray-200"
+                    activeImage === img ? "border-black" : "border-gray-200"
                   }`}
                 >
                   <img
@@ -88,9 +69,7 @@ const ProductDetails = () => {
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">
-              {product.name}
-            </h1>
+            <h1 className="text-4xl font-bold text-gray-900">{product.name}</h1>
 
             <div className="mt-6 text-3xl font-bold text-gray-900">
               {formatPrice(product.price)}
@@ -132,9 +111,7 @@ const ProductDetails = () => {
 
             <div className="flex gap-4 mt-10">
               {isInCart ? (
-                <button
-                  className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-4 rounded-2xl font-medium w-full"
-                >
+                <button className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-4 rounded-2xl font-medium w-full">
                   ✓ Added to Cart
                 </button>
               ) : (
@@ -191,9 +168,7 @@ const ProductDetails = () => {
                   </h3>
 
                   <div className="flex items-center justify-between mt-3">
-                    <p className="text-xl font-bold text-black">
-                      $99
-                    </p>
+                    <p className="text-xl font-bold text-black">$99</p>
 
                     <button className="px-4 py-2 rounded-full bg-black text-white text-sm hover:bg-gray-800 transition">
                       Add

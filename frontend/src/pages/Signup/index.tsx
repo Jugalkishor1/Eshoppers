@@ -1,15 +1,15 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useForm } from "react-hook-form"
-import type { SubmitHandler } from "react-hook-form"
-import { useCreateUser, useLoginUser } from "../../api"
-import { notify } from "@/lib/notifications"
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import { useCreateUser, useLoginUser } from "../../api";
+import { notify } from "@/lib/notifications";
 
 type Inputs = {
-  fullName: string
-  email: string
-  password: string
-  confirmPassword: string
-}
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Signup = () => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>();
 
   const createUser = useCreateUser();
   const loginUser = useLoginUser();
@@ -41,8 +41,8 @@ const Signup = () => {
         },
       });
 
-      notify.success('Account created and logged in');
-      void navigate('/', { replace: true });
+      notify.success("Account created and logged in");
+      void navigate("/", { replace: true });
     } catch (error) {
       notify.error(error);
     }
@@ -52,9 +52,7 @@ const Signup = () => {
     <main className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md bg-white rounded-[30px] p-8 shadow-sm">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900">
-            Welcome Back
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900">Welcome Back</h1>
 
           <p className="mt-3 text-gray-500">
             Signup to continue your shopping journey
@@ -155,14 +153,14 @@ const Signup = () => {
         </form>
 
         <p className="text-center text-gray-500 mt-8">
-            Already have an account?{" "}
+          Already have an account?{" "}
           <Link to="/login" className="text-black font-semibold">
             Login
           </Link>
         </p>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

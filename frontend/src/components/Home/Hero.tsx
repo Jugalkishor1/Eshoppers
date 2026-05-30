@@ -53,14 +53,14 @@ const Hero = () => {
 
                 <h3 className="text-3xl font-bold text-gray-900 mt-1">
                   {formatPrice(149)}
-                </h3> 
+                </h3>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Hero;

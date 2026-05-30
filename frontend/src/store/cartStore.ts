@@ -36,9 +36,7 @@ const useCartStore = create<CartStore>()(
       addToCart: (product) => {
         const items = get().items;
 
-        const existingItem = items.find(
-          (item) => item.id === product.id
-        );
+        const existingItem = items.find((item) => item.id === product.id);
 
         if (existingItem) {
           set({
@@ -48,7 +46,7 @@ const useCartStore = create<CartStore>()(
                     ...item,
                     quantity: item.quantity + 1,
                   }
-                : item
+                : item,
             ),
           });
         } else {
@@ -72,23 +70,19 @@ const useCartStore = create<CartStore>()(
                   ...item,
                   quantity: item.quantity + 1,
                 }
-              : item
+              : item,
           ),
         }));
       },
 
       decreaseQuantity: (id) => {
-        const item = get().items.find(
-          (item) => item.id === id
-        );
+        const item = get().items.find((item) => item.id === id);
 
         if (!item) return;
 
         if (item.quantity <= 1) {
           set((state) => ({
-            items: state.items.filter(
-              (item) => item.id !== id
-            ),
+            items: state.items.filter((item) => item.id !== id),
           }));
 
           return;
@@ -101,40 +95,34 @@ const useCartStore = create<CartStore>()(
                   ...item,
                   quantity: item.quantity - 1,
                 }
-              : item
+              : item,
           ),
         }));
       },
 
       removeFromCart: (id) => {
         set((state) => ({
-          items: state.items.filter(
-            (item) => item.id !== id
-          ),
+          items: state.items.filter((item) => item.id !== id),
         }));
       },
 
       clearCart: () => set({ items: [] }),
 
       getTotalItems: () => {
-        return get().items.reduce(
-          (total, item) => total + item.quantity,
-          0
-        );
+        return get().items.reduce((total, item) => total + item.quantity, 0);
       },
 
       getSubTotal: () => {
         return get().items.reduce(
-          (total, item) =>
-            total + item.price * item.quantity,
-          0
+          (total, item) => total + item.price * item.quantity,
+          0,
         );
       },
     }),
     {
       name: "cart-storage",
-    }
-  )
+    },
+  ),
 );
 
 export default useCartStore;

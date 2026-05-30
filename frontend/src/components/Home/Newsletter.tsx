@@ -12,8 +12,8 @@ const Newsletter = () => {
           </h2>
 
           <p className="mt-6 text-lg text-gray-500 leading-relaxed">
-            Subscribe to receive product updates, exclusive offers,
-            and shopping news directly in your inbox.
+            Subscribe to receive product updates, exclusive offers, and shopping
+            news directly in your inbox.
           </p>
 
           <div className="bg-[#F8F8F8] rounded-full p-2 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto mt-10">
@@ -30,7 +30,7 @@ const Newsletter = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Newsletter
+export default Newsletter;

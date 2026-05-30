@@ -1,5 +1,5 @@
-import { ArrowRight } from "lucide-react"
-import { Link } from "react-router-dom"
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
@@ -17,8 +17,8 @@ const CTA = () => {
               </h2>
 
               <p className="mt-6 text-gray-400 text-lg leading-relaxed max-w-lg">
-                Explore curated collections designed for modern living,
-                comfort, and premium quality.
+                Explore curated collections designed for modern living, comfort,
+                and premium quality.
               </p>
 
               <Link
@@ -41,7 +41,7 @@ const CTA = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CTA
+export default CTA;

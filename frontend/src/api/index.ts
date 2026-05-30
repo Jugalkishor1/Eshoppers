@@ -1,11 +1,11 @@
-import { GraphQLClient } from 'graphql-request';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { graphql } from 'gql.tada';
-import type { VariablesOf } from 'gql.tada';
-import { useAuthStore } from '../store/authStore';
-import { notify } from '@/lib/notifications';
+import { GraphQLClient } from "graphql-request";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { graphql } from "gql.tada";
+import type { VariablesOf } from "gql.tada";
+import { useAuthStore } from "../store/authStore";
+import { notify } from "@/lib/notifications";
 
-const endpoint = import.meta.env.VITE_BACKEND_URL + '/graphql';
+const endpoint = import.meta.env.VITE_BACKEND_URL + "/graphql";
 
 export const getClient = () => {
   const token = useAuthStore.getState().token;
@@ -15,23 +15,23 @@ export const getClient = () => {
       Authorization: token ? `Bearer ${token}` : "",
     },
     responseMiddleware: (response) => {
-      if (!('response' in response)) return;
+      if (!("response" in response)) return;
 
       const message = response.response.errors?.[0]?.message;
 
-      if (message === 'Session not found') {
+      if (message === "Session not found") {
         logout();
 
-        notify.error('Session expired. Please login again.');
+        notify.error("Session expired. Please login again.");
       }
-    }
+    },
   });
 };
 
 const userDocument = graphql(`
   mutation SignupMutation($input: SignupInput!) {
     signup(input: $input) {
-      user { 
+      user {
         id
         fullName
         email
@@ -131,7 +131,7 @@ const GetProduct = graphql(`
 
 export const useProduct = (productId: string) => {
   return useQuery({
-    queryKey: ['product', productId],
+    queryKey: ["product", productId],
     queryFn: async () => {
       const response = await getClient().request({
         document: GetProduct,
@@ -156,7 +156,7 @@ const GetCategories = graphql(`
 
 export const useCategories = () => {
   return useQuery({
-    queryKey: ['categories'],
+    queryKey: ["categories"],
     queryFn: async () => {
       const response = await getClient().request(GetCategories);
       return response.categories;

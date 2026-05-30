@@ -10,19 +10,14 @@ const Cart = () => {
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const getSubTotal = useCartStore((state) => state.getSubTotal);
 
-  const {
-    increaseQuantity,
-    decreaseQuantity,
-  } = useCartStore();
+  const { increaseQuantity, decreaseQuantity } = useCartStore();
 
   const isCartEmpty = cartItem.length === 0;
 
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
       <div className="container mx-auto px-4 py-14">
-        <h1 className="text-4xl font-bold text-gray-900">
-          Your Cart
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-900">Your Cart</h1>
 
         {isCartEmpty ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -40,7 +35,10 @@ const Cart = () => {
               Looks like you haven’t added anything yet.
             </p>
 
-            <Link to="/products" className="mt-6 bg-black text-white px-6 py-3 rounded-full inline-block">
+            <Link
+              to="/products"
+              className="mt-6 bg-black text-white px-6 py-3 rounded-full inline-block"
+            >
               Continue Shopping
             </Link>
           </div>
@@ -63,21 +61,19 @@ const Cart = () => {
                   <div className="flex-1">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="text-lg font-semibold">
-                          {item.name}
-                        </h3>
+                        <h3 className="text-lg font-semibold">{item.name}</h3>
 
                         <p className="text-gray-500 text-sm mt-1">
                           {item.description}
                         </p>
                       </div>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => removeFromCart(item.id)}
-                    >
-                      Remove
-                    </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        Remove
+                      </Button>
                     </div>
 
                     <div className="flex items-center justify-between mt-4">
