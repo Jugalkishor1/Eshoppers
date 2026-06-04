@@ -11,9 +11,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      request: request
-      # Query context goes here, for example:
-      # current_user: current_user,
+      request: request,
+      current_user: current_user
     }
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -23,6 +22,14 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def current_user
+    token = request.headers['Authorization']&.split(' ')&.last
+    return unless token
+    
+    decoded = JsonWebToken.decode(token)
+    User.find_by(id: decoded[:user_id]) if decoded
+  end
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)

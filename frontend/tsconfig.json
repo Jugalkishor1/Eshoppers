@@ -26,7 +26,10 @@
         "tadaOutputLocation": "./src/api/graphql-env.d.ts",
         "tadaTurboLocation": "./src/api/graphql-cache.d.ts"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

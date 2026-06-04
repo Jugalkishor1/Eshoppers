@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useProduct } from "../../api";
 import useCartStore from "../../store/cartStore";
 import { useState } from "react";
+import { formatPrice } from "../../helpers/currency";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -92,7 +93,7 @@ const ProductDetails = () => {
             </h1>
 
             <div className="mt-6 text-3xl font-bold text-gray-900">
-              ₹{product.price}
+              {formatPrice(product.price)}
             </div>
 
             <p className="mt-6 text-gray-500 leading-relaxed">
