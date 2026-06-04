@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Minus, Plus } from "lucide-react";
 import { formatPrice } from "../../helpers/currency";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/store/authStore";
 
 const Cart = () => {
   const cartItem = useCartStore((state) => state.items);
@@ -13,6 +14,7 @@ const Cart = () => {
   const { increaseQuantity, decreaseQuantity } = useCartStore();
 
   const isCartEmpty = cartItem.length === 0;
+  const isLoggedIn = useAuthStore((state) => state.token)
 
   return (
     <main className="bg-[#FAFAFA] min-h-screen">
@@ -126,8 +128,19 @@ const Cart = () => {
                 <span>{formatPrice(getSubTotal())}</span>
               </div>
 
-              <Button size="lg" className="w-full mt-6 rounded-full">
-                Checkout
+              <Button asChild size="lg" className="w-full mt-6 rounded-full">
+                <Link
+                  to={isLoggedIn ? "/checkout" : "/login"}
+                  state={
+                    !isLoggedIn
+                      ? {
+                          redirectTo: "/checkout",
+                        }
+                      : undefined
+                  }
+                >
+                  Checkout
+                </Link>
               </Button>
             </div>
           </div>

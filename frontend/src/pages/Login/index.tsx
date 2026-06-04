@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { useLoginUser } from "../../api";
@@ -9,8 +9,14 @@ type Inputs = {
   password: string;
 };
 
+type LocationState = {
+  redirectTo?: string;
+};
+
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as LocationState | null;
 
   const {
     register,
@@ -30,7 +36,9 @@ const Login = () => {
       });
 
       notify.success("Logged in successfully");
-      void navigate("/", { replace: true });
+      void navigate(state?.redirectTo ?? "/", {
+        replace: true,
+      });
     } catch (error) {
       notify.error(error);
     }
@@ -46,6 +54,12 @@ const Login = () => {
             Login to continue your shopping journey
           </p>
         </div>
+
+        {state?.redirectTo === "/checkout" && (
+          <div className="mt-6 rounded-md border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
+            Please log in to continue with checkout.
+          </div>
+        )}
 
         <form
           onSubmit={(e) => void handleSubmit(onSubmit)(e)}
