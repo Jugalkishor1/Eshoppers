@@ -130,14 +130,7 @@ const Cart = () => {
 
               <Button asChild size="lg" className="w-full mt-6 rounded-full">
                 <Link
-                  to={isLoggedIn ? "/checkout" : "/login"}
-                  state={
-                    !isLoggedIn
-                      ? {
-                          redirectTo: "/checkout",
-                        }
-                      : undefined
-                  }
+                  to="/checkout"
                 >
                   Checkout
                 </Link>
