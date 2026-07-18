@@ -1,4 +1,4 @@
-import { Route, Routes as Router } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes as Router } from "react-router-dom";
 import Layout from "./components/Layout";
 import Categories from "./pages/Categories";
 import Products from "./pages/Products";
@@ -7,6 +7,14 @@ import ProductDetails from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Checkout from "./pages/Checkout";
+import { useAuthStore } from "./store/authStore";
+
+const PrivateRoute = () => {
+  const isAuthenticated = useAuthStore((i) => i.token);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
 const Routes = () => {
   return (
@@ -20,6 +28,10 @@ const Routes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        
+        <Route element={<PrivateRoute />}>
+          <Route path="/checkout" element={<Checkout />} />
+        </Route>
       </Route>
     </Router>
   );
