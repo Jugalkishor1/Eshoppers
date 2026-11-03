@@ -53,8 +53,14 @@ pipeline {
                         sh '''
                             export DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:5432/backend_test"
 
-                            bundle exec rails db:prepare
-                            bundle exec rails test
+                            echo "Creating test database..."
+                            RAILS_ENV=test bundle exec rails db:create
+
+                            echo "Running database migrations..."
+                            RAILS_ENV=test bundle exec rails db:migrate
+
+                            echo "Running backend tests..."
+                            RAILS_ENV=test bundle exec rails test
                         '''
                     }
                 }
